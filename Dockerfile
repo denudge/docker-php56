@@ -11,12 +11,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install rsync openssh-server opens
 RUN sed -i "s/DAEMON_OPTS=\"-f \/etc\/openntpd\/ntpd.conf\"/DAEMON_OPTS=\"-f \/etc\/openntpd\/ntpd.conf -s\"/" /etc/default/openntpd
 RUN mkdir -p /root/.ssh
 RUN chmod 700 /root/.ssh
-ADD ~/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+ADD id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 600 /root/.ssh/authorized_keys
 
 # Install Apache, PHP, and supplimentary programs. curl and lynx-cur are for
 # debugging the container.
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 libapache2-mod-php5 php5-mysql php5-cli php5-gd php-pear php-apc php5-curl curl lynx-cur
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 libapache2-mod-php5 php5-mysql php5-cli php5-dev php5-gd php-pear php-apc php5-curl curl lynx-cur ant
 
 # Enable apache mods.
 RUN a2enmod php5
@@ -41,6 +41,22 @@ RUN cd /tmp; wget https://phar.phpunit.de/phpunit.phar && \
 RUN cd /tmp; wget https://getcomposer.org/download/1.0.0-alpha11/composer.phar && \
     chmod +x composer.phar && \
     mv composer.phar /usr/local/bin/composer
+
+# Install Copy/PasteDetector
+RUN cd /tmp; wget https://phar.phpunit.de/phpcpd.phar && \
+    chmod +x phpcpd.phar && \
+    mv phpcpd.phar /usr/local/bin/phpcpd
+
+# Install other php-tools
+RUN pear channel-update pear.php.net
+RUN pear install PHP_CodeSniffer-2.5.1
+RUN pear channel-discover pear.phpmd.org
+RUN pear channel-discover pear.pdepend.org
+RUN pear install --alldeps phpmd/PHP_PMD
+RUN pear pear channel-discover pear.survivethedeepend.com
+RUN pear channel-discover hamcrest.googlecode.com/svn/pear
+RUN pear install --alldeps deepend/Mockery
+
 
 # Manually set up the apache environment variables
 ENV APACHE_RUN_USER www-data
