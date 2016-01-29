@@ -1,5 +1,6 @@
 #!/bin/bash
 
-MACHINE=php56
+source ./config.sh
+
 docker build -t ${MACHINE} .
 

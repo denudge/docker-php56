@@ -1,0 +1,5 @@
+#!/bin/bash
+
+MACHINE=php56
+WEBDIR=`pwd`
+
