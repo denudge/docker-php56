@@ -16,7 +16,7 @@ RUN chmod 600 /root/.ssh/authorized_keys
 
 # Install Apache, PHP, and supplimentary programs. curl and lynx-cur are for
 # debugging the container.
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 libapache2-mod-php5 php5-mysql php5-cli php5-dev php5-gd php-pear php-apc php5-curl curl lynx-cur ant
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 libapache2-mod-php5 php5-mysql php5-mongo php5-cli php5-dev php5-gd php-pear php-apc php5-curl curl lynx-cur ant
 
 # Enable apache mods.
 RUN a2enmod php5
