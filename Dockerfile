@@ -53,7 +53,7 @@ RUN pear install PHP_CodeSniffer-2.5.1
 RUN pear channel-discover pear.phpmd.org
 RUN pear channel-discover pear.pdepend.org
 RUN pear install --alldeps phpmd/PHP_PMD
-RUN pear pear channel-discover pear.survivethedeepend.com
+RUN pear channel-discover pear.survivethedeepend.com
 RUN pear channel-discover hamcrest.googlecode.com/svn/pear
 RUN pear install --alldeps deepend/Mockery
 
